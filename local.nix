@@ -2,20 +2,21 @@
 
 {
   ########################
-  # ХОСТ / ПОЛЬЗОВАТЕЛЬ
+  # HOSTNAME / USER
   ########################
 
-  # ТУТ ВПИСЫВАЕШЬ СВОЁ:
-  networking.hostName = "МоёИмяХоста";  # например "laptop" или что захочешь
+  # Set your own values here:
+  networking.hostName = "my-laptop";  # change to whatever you want
 
-  users.users."МойЮзер" = {
+  users.users."myuser" = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "docker" ];
-    initialPassword = "временныйПароль";  # потом сменишь через passwd
+    # Temporary password, change it after first login with `passwd`.
+    initialPassword = "changeme123";
   };
 
   ########################
-  # ФАЙЛОВЫЕ СИСТЕМЫ
+  # FILESYSTEMS (MATCH DISK LABELS)
   ########################
 
   fileSystems."/" = {

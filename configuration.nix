@@ -2,7 +2,7 @@
 
 {
   ########################
-  # БАЗОВЫЕ НАСТРОЙКИ
+  # BASIC SETTINGS
   ########################
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -14,14 +14,14 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   ########################
-  # СЕТЬ
+  # NETWORK
   ########################
 
-  # ВАЖНО: hostname задаётся в local.nix, тут НЕ трогаем.
+  # Hostname is defined in local.nix, do NOT set it here.
   networking.networkmanager.enable = true;
 
   ########################
-  # ЗВУК / ПЕЧАТЬ / ВИДЕО
+  # AUDIO / PRINTING / VIDEO
   ########################
 
   services.pipewire.enable = true;
@@ -44,7 +44,7 @@
   services.displayManager.sddm.wayland.enable = true;
 
   ########################
-  # ПАКЕТЫ СИСТЕМЫ
+  # SYSTEM PACKAGES
   ########################
 
   environment.systemPackages = with pkgs; [
@@ -61,11 +61,11 @@
   programs.steam.enable = true;
 
   ########################
-  # ДРУГОЕ
+  # USERS
   ########################
 
-  # ВАЖНО: пользователей здесь НЕ описываем, только в local.nix.
-  # Это облегчает хранение конфигов в публичном GitHub.
+  # Users are defined only in local.nix (not in GitHub).
+  # This keeps your hostname / username / password out of the repo.
 
   system.stateVersion = "25.05";
 }
