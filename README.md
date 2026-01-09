@@ -1,40 +1,40 @@
-Как этим пользоваться при чистой установке
-Загрузиться с minimal ISO, поднять сеть (у тебя уже получается).
+### Как этим пользоваться при чистой установке
+1. Загрузиться с minimal ISO, поднять сеть.
+```bash
+nmcli device wifi list
+nmcli device wifi connect RT-5GPON-****
+```
 
-Клонировать конфиг:
-
+2. Клонировать конфиг:
 ```bash
 git clone https://github.com/ТЫ/nixos-config /mnt/etc/nixos
 cd /mnt/etc/nixos
 ```
 
-Разметить диск:
+3. Разметить диск:
 ```bash
 chmod +x scripts/partition-nvme0n1.sh
 sudo ./scripts/partition-nvme0n1.sh
 ```
 
-Сгенерировать hardware‑конфиг:
+4. Сгенерировать hardware‑конфиг:
 ```bash
 nixos-generate-config --root /mnt
 cp /mnt/etc/nixos/hardware-configuration.nix .
 ```
 
-(файл есть локально, но в git не пойдёт благодаря .gitignore).
-
-Создать local.nix:
+5. Создать local.nix:
 ```bash
 nano local.nix
-# Вписываешь hostname, username, initialPassword как в шаблоне выше
+# Вписываем hostname, username, initialPassword
 ```
 
-Установить систему через flake:
+6. Установить систему через flake:
 ```bash
 nixos-install --root /mnt --flake .#laptop
 ```
 
-После установки:
+7. После установки:
  - ребут,
  - логин под своим пользователем,
  - смена пароля: passwd.
- 
