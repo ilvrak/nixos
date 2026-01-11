@@ -17,11 +17,11 @@
   # NETWORK
   ########################
 
-  # Hostname is defined in local.nix, do NOT set it here.
+  # Hostname is defined in local.nix
   networking.networkmanager.enable = true;
 
   ########################
-  # AUDIO / PRINTING / VIDEO
+  # AUDIO / VIDEO / PRINTING
   ########################
 
   services.pipewire.enable = true;
@@ -48,24 +48,29 @@
   ########################
 
   environment.systemPackages = with pkgs; [
-    git vim
-    kitty waybar rofi-wayland wl-clipboard
-    firefox
-    vscode.fhs
-    steam
-    chromium
-    obsidian
-    ansible
+    git
+    vim
+    kitty          # terminal
+    waybar
+    rofi-wayland
+    wl-clipboard
+    htop
   ];
+
+  ########################
+  # STEAM / DOCKER
+  ########################
 
   programs.steam.enable = true;
 
+  virtualisation.docker.enable = true;
+
   ########################
-  # USERS
+  # MISC
   ########################
 
-  # Users are defined only in local.nix (not in GitHub).
-  # This keeps your hostname / username / password out of the repo.
+  # Users are defined in local.nix (hostname, username, password).
+  # Do NOT add users here, to keep GitHub config generic.
 
   system.stateVersion = "25.05";
 }

@@ -13,25 +13,31 @@ fi
 echo "Wiping existing partition table and signatures..."
 wipefs -af "$DISK"
 
-echo "Creating GPT and partitions..."
+echo "Creating GPT partition table..."
 parted "$DISK" -- mklabel gpt
-parted "$DISK" -- mkpart ESP fat32 1MiB 513MiB
+
+echo "Creating EFI partition (1 GiB)..."
+parted "$DISK" -- mkpart ESP fat32 1MiB 1025MiB
 parted "$DISK" -- set 1 esp on
-parted "$DISK" -- mkpart primary ext4 513MiB 100.5GiB
-parted "$DISK" -- mkpart primary linux-swap 100.5GiB 116.5GiB
-parted "$DISK" -- mkpart primary ext4 116.5GiB 100%
+
+echo "Creating swap partition (4 GiB)..."
+parted "$DISK" -- mkpart primary linux-swap 1025MiB 5121MiB
+
+echo "Creating root partition (rest of the disk)..."
+parted "$DISK" -- mkpart primary ext4 5121MiB 100%
 
 echo "Formatting filesystems..."
-mkfs.fat -F32 -n NIXOS_BOOT ${DISK}p1
-mkfs.ext4 -L NIXOS_ROOT ${DISK}p2
-mkswap -L NIXOS_SWAP ${DISK}p3
-mkfs.ext4 -L NIXOS_HOME ${DISK}p4
+mkfs.ext4 -L nixos-root ${DISK}p3
+mkswap -L swap ${DISK}p2
+mkfs.fat -F32 -n boot ${DISK}p1
 
 echo "Mounting filesystems..."
-mount ${DISK}p2 /mnt
-mkdir -p /mnt/boot /mnt/home
+mount ${DISK}p3 /mnt
+mkdir -p /mnt/boot
 mount ${DISK}p1 /mnt/boot
-mount ${DISK}p4 /mnt/home
-swapon ${DISK}p3
+swapon ${DISK}p2
 
-echo "Done. /mnt is ready for nixos-generate-config and nixos-install."
+echo
+echo "Done."
+lsblk "$DISK"
+echo "/mnt is ready for nixos-generate-config and nixos-install."

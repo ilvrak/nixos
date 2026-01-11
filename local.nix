@@ -1,18 +1,21 @@
 { config, pkgs, ... }:
 
+let
+  # CHANGE THESE LOCALLY
+  userName = "myuser";
+  hostName = "my-laptop";
+in
 {
   ########################
   # HOSTNAME / USER
   ########################
 
-  # Set your own values here:
-  networking.hostName = "my-laptop";  # change to whatever you want
+  networking.hostName = hostName;
 
-  users.users."myuser" = {
+  users.users.${userName} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
-    # Temporary password, change it after first login with `passwd`.
-    initialPassword = "changeme123";
+    extraGroups  = [ "wheel" "networkmanager" "docker" ];
+    initialPassword = "changeme123";  # change after first login with `passwd`
   };
 
   ########################
@@ -37,4 +40,10 @@
   swapDevices = [
     { device = "/dev/disk/by-label/NIXOS_SWAP"; }
   ];
+
+  ########################
+  # HOME MANAGER USER
+  ########################
+
+  home-manager.users.${userName} = import ./home.nix;
 }
