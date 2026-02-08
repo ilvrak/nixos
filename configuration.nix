@@ -6,6 +6,7 @@
   ########################
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
 
   time.timeZone = "Europe/Moscow";
 
@@ -19,6 +20,7 @@
 
   # Hostname is defined in local.nix
   networking.networkmanager.enable = true;
+  networking.networkmanager.unmanaged = [];
 
   ########################
   # AUDIO / VIDEO / PRINTING
@@ -28,8 +30,12 @@
   services.pipewire.pulse.enable = true;
   services.printing.enable = true;
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
   programs.xwayland.enable = true;
+
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
 
   ########################
   # Hyprland + SDDM
@@ -50,11 +56,22 @@
   environment.systemPackages = with pkgs; [
     git
     vim
-    kitty          # terminal
+    alacritty
     waybar
-    rofi-wayland
+    wofi
     wl-clipboard
     htop
+    wget
+    networkmanagerapplet
+    networkmanager
+    blueman
+    bluez
+    bluez-tools
+    hyprlauncher
+  ];
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
   ];
 
   ########################

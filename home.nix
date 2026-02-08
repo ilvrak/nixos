@@ -17,23 +17,33 @@
     ansible
     python3
     vscode
-    dbeaver       # DB GUI (can swap later)
+    dbeaver-bin
 
     # Browsers / UI apps
-    chromium
+    google-chrome
     obsidian
     telegram-desktop
     keepassxc
-
+    thunar
+    thunar-archive-plugin
+    
     # Cloud / sync (Yandex Disk)
     yandex-disk
 
     # Office
-    freeoffice
+    libreoffice
 
     # Shells / tools
     powershell
+    gopass
+    gnupg
+    pinentry-curses
+    oath-toolkit
+    ncdu
     mc
+    wl-clipboard
+    cliphist
+    openconnect
   ];
 
   ########################
@@ -53,5 +63,4 @@
 
   programs.starship.enable = true;
 
-  # Kitty is installed system-wide, but можно добавить конфиги позже через xdg.configFile
 }
